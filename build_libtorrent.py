@@ -11,7 +11,6 @@ from sh.contrib import git
 
 parser = argparse.ArgumentParser(
         description='build libtorrent')
-parser.add_argument('--aptinstall',help='apt-get the prerequisites', action='store_true')
 parser.add_argument('--gitclone', help='re-git the source code', action='store_true')
 parser.add_argument('--configure',  help='re-configure the build', action='store_true')
 
@@ -19,22 +18,7 @@ args = parser.parse_args()
 
 
 
-
-# --- prerequisites
-if args.aptinstall:
-    print "apt-get installing prerequisites"
-
-    apt_get_install = sudo.bake('apt-get', 'install')
-    apt_get_install("libqt5svg5-dev")
-    apt_get_install("libboost-system-dev", "libboost-dev", "libboost-chrono-dev", "libboost-random-dev", "libssl-dev", "libgeoip-dev")
-    apt_get_install("git", "pkg-config", "automake", "libtool")
-    apt_get_install("libboost-python-dev")
-    # apt_get_install("build-essentials")
-    apt_get_install("libzip-dev", "libzzip-dev")
-    apt_get_install("checkinstall", "libssl-dev")
-    apt_get_install("libgeoip-dev", "geoip-database")
-
-# --- install the source doe
+# --- install the source code
 
 if args.gitclone:
     print "git clone the source code"

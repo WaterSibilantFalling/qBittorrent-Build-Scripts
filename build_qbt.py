@@ -3,7 +3,7 @@
     it should also, optionally, call the build_libtorrent script 
 
     The idea is that it is now easy to rebuild qbittorrent, both time and brain
-    messing with shit wise 
+    messing with shit wise
 '''
 
 import argparse
@@ -25,6 +25,7 @@ parser.add_argument('--headless',  help='make the headless version', action='sto
 args = parser.parse_args()
 
 
+
 # --- install the source code
 if args.gitclone:
     print "git clone the source code"
@@ -38,16 +39,13 @@ cmd_configure = sh.Command("./configure")
 
 
 # --- with GUI
-
 if not args.headless:
-
     # --- configure
     if args.configure:
         print "configure"
 
         cmd_configure('--libdir=/usr/lib/i386-linux-gnu/', 'LDFLAGS=-L /usr/local/lib/', '--prefix=/usr/local', "--with-boost-libdir=/usr/lib/i386-linux-gnu/", "--enable-debug", "--disable-dependency-tracking", "--disable-option-checking")
         # no python binding option
-
 
     # - make
 
@@ -64,8 +62,9 @@ if not args.headless:
         #sudo(' checkinstall', '--pkgversion',' 3.4.0alpha')
         sudo('make', 'install')
 
-# --- qbtitorrent-nox
 
+
+# --- Headless: qbtitorrent-nox
 if args.headless:
     nice20('make', 'clean') # MUST do make clean
 
@@ -83,7 +82,8 @@ if args.headless:
         sudo('make', 'install')
 
 
-# - cleanup
+
+# --- cleanup
 #
 sudo('cpufreq-set', '-g ondemand')
 cd('..')
