@@ -19,7 +19,8 @@ packages_required_for_qbittorent_and_libtorrent = [
     "libboost-chrono-dev",
     "libboost-random-dev",
     "libssl-dev",
-    "libgeoip-dev" "git",
+    "libgeoip-dev",
+    "git",
     "pkg-config",
     "automake",
     "libtool",
@@ -32,10 +33,12 @@ packages_required_for_qbittorent_and_libtorrent = [
     "geoip-database"]
 
 def instal_a_package(pkg_name):
-    return_value = apt_get_install(pkg_name)
-    if (return_value != 0):
+    output = apt_get_install(pkg_name)
+    exitcode = output.process.exit_code
+    if (0 != exitcode) :
         print "could not apt-get {}. Please investigate".format(pkg_name)
         return -1
+    print "apt-get install'd {} successfully".format(pkg_name)
     return 0
 
 
